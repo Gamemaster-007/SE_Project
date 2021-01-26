@@ -1,0 +1,104 @@
+Using pre-set license
+
+ COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+/Users/gamemaster/Documents/SE_project/SE_Project/game
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+53824
+Successfully changed project path to: /Users/gamemaster/Documents/SE_project/SE_Project/game
+/Users/gamemaster/Documents/SE_project/SE_Project/game
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 22.53 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.2f1 (068178b99f32)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/gamemaster/Documents/SE_project/SE_Project/game/Assets
+GfxDevice: creating device client; threaded=0
+2021-01-26 18:59:22.604 Unity[2804:190175] Color LCD preferred device: Intel(R) UHD Graphics 630 (low power)
+2021-01-26 18:59:22.604 Unity[2804:190175] Metal devices available: 2
+2021-01-26 18:59:22.604 Unity[2804:190175] 0: AMD Radeon Pro 5300M (high power)
+2021-01-26 18:59:22.604 Unity[2804:190175] 1: Intel(R) UHD Graphics 630 (low power)
+2021-01-26 18:59:22.604 Unity[2804:190175] Using device AMD Radeon Pro 5300M (high power)
+Initializing Metal device caps: AMD Radeon Pro 5300M
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = '/Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56804
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Registered in 0.000577 seconds.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 20.76 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.884 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000329 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.19 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.869 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launching external process: /Applications/Unity/Hub/Editor/2020.2.2f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.19 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1099 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 115.9 MB.
+System memory in use after: 115.9 MB.
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1541.
+Total: 2.606293 ms (FindLiveObjects: 0.211487 ms CreateObjectMapping: 0.036401 ms MarkObjects: 2.250758 ms  DeleteObjects: 0.106669 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/helicopter.fbx
+  artifactKey: Guid(c4aac899d146042428e658bd2fd8c426) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/helicopter.fbx using Guid(c4aac899d146042428e658bd2fd8c426) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66de7867a2a91a6e35174a4cc4571f41') in 1.467798 seconds
+  Import took 1.471387 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.856284 seconds.
+  path: Assets/helipad.fbx
+  artifactKey: Guid(242efbc31598544538ba373aeb164123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/helipad.fbx using Guid(242efbc31598544538ba373aeb164123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44c26ed760f15a7943f1958b095f6676') in 0.142871 seconds
+  Import took 0.146061 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.599609 seconds.
+  path: Assets/3d-model_22.fbx
+  artifactKey: Guid(f4482607d8d774d80b955a4b067d5e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3d-model_22.fbx using Guid(f4482607d8d774d80b955a4b067d5e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98a01b753c31b41df9752cae2708f250') in 0.307176 seconds
+  Import took 0.310322 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 18.490962 seconds.
+  path: Assets/industry_barrels.fbx
+  artifactKey: Guid(f4482607d8d774d80b955a4b067d5e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/industry_barrels.fbx using Guid(f4482607d8d774d80b955a4b067d5e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b82763cb85f2fdc483d4578993677b1') in 0.253602 seconds
+  Import took 0.256762 seconds .
+
