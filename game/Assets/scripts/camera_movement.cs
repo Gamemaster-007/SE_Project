@@ -5,27 +5,28 @@ using System.Collections;
 public class camera_movement : MonoBehaviour
 {
     public Camera Camera;
-    public bool Rotate;
     protected Plane Plane;
     public bool istapped;
     public string component_name;
     
     
-    public string[] crop_Names = new string[4];
+    public string[] crop_Names = new string[4]; //s
 
-    public bool[] isFieldEmpty = {true,true,true,true};
-    public bool[] isFieldReady = {false,false,false,false};
+    public int[] isFieldEmpty = {1,1,1,1}; //s
+    public int[] isFieldReady = {0,0,0,0}; //s
     public GameObject[] checkMarks = new GameObject[4];
+    public int[] ScheckMarks = new int[4]; //s
 
-    public bool[] isSecFieldEmpty = {true,true,true,true};
-    public bool[] isSecFieldReady = {false,false,false,false};
+    public int[] isSecFieldEmpty = {1,1,1,1}; //s
+    public int[] isSecFieldReady = {0,0,0,0}; //s
     public GameObject[] secCheckMarks = new GameObject[4];
+    public int[] SsecCheckMarks = new int[4]; //s
     
-    public int paddy_count = 0;
-    public int sunflower_count = 0;
-    public int corn_count = 0;
-    public int pumpkin_count = 0;
-    public int carrot_count = 0;
+    public int paddy_count = 0; //s
+    public int sunflower_count = 0; //s
+    public int corn_count = 0; //s
+    public int pumpkin_count = 0; //s
+    public int carrot_count = 0; //s
 
     public GameObject[] crop_menu;
     public bool isCropMenuOpen = false;
@@ -37,20 +38,32 @@ public class camera_movement : MonoBehaviour
     public bool isCarrotButtonOpen = false;
 
     public GameObject[] paddy = new GameObject[4];
+    public int[] Spaddy = new int[4]; //s
     public GameObject[] sunflowers = new GameObject[24];
+    public int[] Ssunflowers = new int[24]; //s
     public GameObject[] corns = new GameObject[24];
+    public int[] Scorns = new int[24]; //s
     public GameObject[] pumpkins = new GameObject[24];
+    public int[] Spumpkins = new int[24]; //s
     public GameObject[] carrots = new GameObject[18];
+    public int[] Scarrots = new int[18]; //s
 
-    public int total_coins = 0;
+    public int total_coins = 100000; //s
     public Text total_coins_display;
+    public Text shop_coins_display;
 
-    public int[] display_coin_count = {0,10};
+    public int[] display_coin_count = {1000,200}; //s
     public GameObject[] coins = new GameObject[2];
     public GameObject[] display_coin_text = new GameObject[2];
 
     public GameObject shop;
     public GameObject[] items;
+    public int[] items_status; //s
+    public GameObject shopIsEmpty;
+    public int cur_item = 0; //s
+    public int[] item_prices = {7500,10000,500,750,800,930,1500}; //s
+
+    public GameObject[] bakery_logos = new GameObject[2];
 
     private void Awake()
     {
@@ -58,9 +71,81 @@ public class camera_movement : MonoBehaviour
             Camera = Camera.main;
     }
 
+    public void OnApplicationQuit(){
+        SaveSystem.SaveData(this);
+    }
+
+    public void Start(){
+        SavingData data = SaveSystem.LoadData();
+
+        if (data != null)
+        {        
+            crop_Names = data.crop_Names;
+            isFieldEmpty = data.isFieldEmpty;
+            isFieldReady = data.isFieldReady;
+            ScheckMarks = data.ScheckMarks;
+            isSecFieldEmpty = data.isSecFieldEmpty;
+            isSecFieldReady = data.isSecFieldReady;
+            SsecCheckMarks = data.SsecCheckMarks;
+            paddy_count = data.paddy_count;
+            sunflower_count = data.sunflower_count;
+            corn_count = data.corn_count;
+            pumpkin_count = data.pumpkin_count;
+            carrot_count = data.carrot_count;
+            Spaddy = data.Spaddy;
+            Ssunflowers = data.Ssunflowers;
+            Scorns = data.Scorns;
+            Spumpkins = data.Spumpkins;
+            Scarrots = data.Scarrots;
+            total_coins = data.total_coins;
+            items_status = data.items_status;
+            cur_item = data.cur_item;
+            item_prices = data.item_prices;
+            display_coin_count = data.display_coin_count;
+
+            for (int i=0; i<4; i++)
+            {
+                if(ScheckMarks[i] == 1)
+                    checkMarks[i].SetActive(true);
+            }
+            for (int i=0; i<4; i++)
+            {
+                if(SsecCheckMarks[i] == 1)
+                    secCheckMarks[i].SetActive(true);
+            }
+            for (int i=0; i<4; i++)
+            {
+                if(Spaddy[i] == 1)
+                    paddy[i].SetActive(true);
+            }
+            for (int i=0; i<24; i++)
+            {
+                if(Ssunflowers[i] == 1)
+                    sunflowers[i].SetActive(true);
+            }
+            for (int i=0; i<24; i++)
+            {
+                if(Scorns[i] == 1)
+                    corns[i].SetActive(true);
+            }
+            for (int i=0; i<24; i++)
+            {
+                if(Spumpkins[i] == 1)
+                    pumpkins[i].SetActive(true);
+            }
+            for (int i=0; i<18; i++)
+            {
+                if(Scarrots[i] == 1)
+                    carrots[i].SetActive(true);
+            }
+        }
+        total_coins_display.text = total_coins.ToString();
+        shop_coins_display.text = total_coins.ToString();
+    }
+
     private void on_field_tap(int field_no, string component_Name)
     {
-        if (isFieldEmpty[field_no] == true && isCropMenuOpen == false)
+        if (isFieldEmpty[field_no] == 1 && isCropMenuOpen == false)
         {
             pumpkin_button.SetActive(false);
             isPumpkinButtonOpen = false;
@@ -75,15 +160,17 @@ public class camera_movement : MonoBehaviour
                 crop.SetActive(true);
             }
         }
-        else if (isFieldReady[field_no] == true)
+        else if (isFieldReady[field_no] == 1)
         {
-            isFieldEmpty[field_no] = true;
-            isFieldReady[field_no] = false;
+            isFieldEmpty[field_no] = 1;
+            isFieldReady[field_no] = 0;
             checkMarks[field_no].SetActive(false);
+            ScheckMarks[field_no] = 0;
             if (crop_Names[field_no] == "paddy")
             {
                 paddy_count = paddy_count + 1;
                 paddy[field_no].SetActive(false);
+                Spaddy[field_no] = 0;
             }
             else if (crop_Names[field_no] == "sunflower")
             {
@@ -91,6 +178,7 @@ public class camera_movement : MonoBehaviour
                 for (int i=field_no*6; i<(field_no+1)*6; i++)
                 {
                     sunflowers[i].SetActive(false);
+                    Ssunflowers[i] = 0;
                 }
             }
             else
@@ -99,6 +187,7 @@ public class camera_movement : MonoBehaviour
                 for (int i=field_no*6; i<(field_no+1)*6; i++)
                 {
                     corns[i].SetActive(false);
+                    Scorns[i] = 0;
                 }
             }
         }
@@ -108,7 +197,7 @@ public class camera_movement : MonoBehaviour
     {
         if (field_no == 1 || field_no == 3)
         {
-            if (isSecFieldEmpty[field_no] == true && isPumpkinButtonOpen == false)
+            if (isSecFieldEmpty[field_no] == 1 && isPumpkinButtonOpen == false)
             {
                 isCropMenuOpen = false;
                 foreach (GameObject crop in crop_menu)
@@ -123,17 +212,19 @@ public class camera_movement : MonoBehaviour
                 pumpkin_button.SetActive(true);
                 component_name = component_Name;
             }
-            else if (isSecFieldReady[field_no] == true)
+            else if (isSecFieldReady[field_no] == 1)
             {
-                isSecFieldEmpty[field_no] = true;
-                isSecFieldReady[field_no] = false;
+                isSecFieldEmpty[field_no] = 1;
+                isSecFieldReady[field_no] = 0;
                 secCheckMarks[field_no].SetActive(false);
+                SsecCheckMarks[field_no] = 0;
                 pumpkin_count = pumpkin_count + 1;
                 if (field_no == 1)
                 {
                     for (int i=0; i<12; i++)
                     {
                         pumpkins[i].SetActive(false);
+                        Spumpkins[i] = 0;
                     }
                 }
                 else
@@ -141,13 +232,14 @@ public class camera_movement : MonoBehaviour
                     for (int i=12; i<24; i++)
                     {
                         pumpkins[i].SetActive(false);
+                        Spumpkins[i] = 0;
                     }
                 }
             }
         }
         else if (field_no == 0 || field_no == 2)
         {
-            if (isSecFieldEmpty[field_no] == true && isPumpkinButtonOpen == false)
+            if (isSecFieldEmpty[field_no] == 1 && isPumpkinButtonOpen == false)
             {
                 isCropMenuOpen = false;
                 foreach (GameObject crop in crop_menu)
@@ -162,17 +254,19 @@ public class camera_movement : MonoBehaviour
                 carrot_button.SetActive(true);
                 component_name = component_Name;
             }
-            else if (isSecFieldReady[field_no] == true)
+            else if (isSecFieldReady[field_no] == 1)
             {
-                isSecFieldEmpty[field_no] = true;
-                isSecFieldReady[field_no] = false;
+                isSecFieldEmpty[field_no] = 1;
+                isSecFieldReady[field_no] = 0;
                 secCheckMarks[field_no].SetActive(false);
+                SsecCheckMarks[field_no] = 0;
                 carrot_count = carrot_count + 1;
                 if (field_no == 0)
                 {
                     for (int i=0; i<9; i++)
                     {
                         carrots[i].SetActive(false);
+                        Scarrots[i] = 0;
                     }
                 }
                 else
@@ -180,6 +274,7 @@ public class camera_movement : MonoBehaviour
                     for (int i=9; i<18; i++)
                     {
                         carrots[i].SetActive(false);
+                        Scarrots[i] = 0;
                     }
                 }
             }
@@ -203,6 +298,9 @@ public class camera_movement : MonoBehaviour
                 coins[i].SetActive(false);
             }
         }
+        bakery_logos[0].transform.Rotate(0,0,-25*Time.deltaTime);
+        bakery_logos[1].transform.Rotate(0,-25*Time.deltaTime,0);
+
 
         if (Input.touchCount >= 1)
             Plane.SetNormalAndPosition(transform.up, transform.position);
@@ -272,10 +370,13 @@ public class camera_movement : MonoBehaviour
                             total_coins = total_coins + display_coin_count[index - 1];
                             display_coin_count[index-1] = 0;
                             total_coins_display.text = total_coins.ToString();
+                            shop_coins_display.text = total_coins.ToString();
                         }
                         else if (hit.transform.name == "factory_1")
                         {
+                            items[cur_item].SetActive(true);
                             shop.SetActive(true);
+                            component_name = "factory_1";
                         }
                     }
                 }
@@ -285,25 +386,111 @@ public class camera_movement : MonoBehaviour
 
     }
 
+    public void next_item(){
+        if (cur_item != -1)
+        {
+            var temp = 0;
+            items[cur_item].SetActive(false);
+            for (int i=cur_item+1; i<items.Length; i++)
+            {
+                if (items_status[i] == 0)
+                {
+                    items[i].SetActive(true);
+                    cur_item = i;
+                    temp = 1;
+                    break;
+                }
+            }
+            if (temp == 0)
+            {
+                for (int i=0; i<cur_item+1; i++)
+                {
+                    if (items_status[i] == 0)
+                    {
+                        items[i].SetActive(true);
+                        cur_item = i;
+                        temp = 1;
+                        break;
+                    }
+                }
+            }
+            if (temp == 0)
+            {
+                shopIsEmpty.SetActive(true);
+                cur_item = -1;
+            }
+        }
+    }
+
+    public void previous_item(){
+        if (cur_item != -1)
+        {
+            var temp = 0;
+            items[cur_item].SetActive(false);
+            for (int i=cur_item-1; i>-1; i--)
+            {
+                if (items_status[i] == 0)
+                {
+                    items[i].SetActive(true);
+                    cur_item = i;
+                    temp = 1;
+                    break;
+                }
+            }
+            if (temp == 0)
+            {
+                for (int i=items.Length - 1; i>cur_item-1; i--)
+                {
+                    if (items_status[i] == 0)
+                    {
+                        items[i].SetActive(true);
+                        cur_item = i;
+                        temp = 1;
+                        break;
+                    }
+                }
+            }
+            if (temp == 0)
+            {
+                shopIsEmpty.SetActive(true);
+                cur_item = -1;
+            }
+        }
+    }
+
+    public void purchase_item()
+    {
+        if (total_coins >= item_prices[cur_item])
+        {
+            total_coins = total_coins - item_prices[cur_item];
+            total_coins_display.text = total_coins.ToString();
+            shop_coins_display.text = total_coins.ToString();
+            items_status[cur_item] = 1;
+            next_item();
+        }
+    }
+
     public void close_shop(){
         shop.SetActive(false);
     }
 
     private void modify_crop(int field_no, string crop_name)
     {
-        isFieldEmpty[field_no] = false;
-        isFieldReady[field_no] = true;
+        isFieldEmpty[field_no] = 0;
+        isFieldReady[field_no] = 1;
         isCropMenuOpen = false;
         crop_Names[field_no] = crop_name;
         if (crop_name == "paddy")
         {
             paddy[field_no].SetActive(true);
+            Spaddy[field_no] = 1;
         }
         else if (crop_name == "sunflower")
         {
             for (int i=field_no*6; i<(field_no+1)*6; i++)
             {
                 sunflowers[i].SetActive(true);
+                Ssunflowers[i] = 1;
             }
         }
         else
@@ -311,6 +498,7 @@ public class camera_movement : MonoBehaviour
             for (int i=field_no*6; i<(field_no+1)*6; i++)
             {
                 corns[i].SetActive(true);
+                Scorns[i] = 1;
             }
         }
         foreach (GameObject crop in crop_menu)
@@ -318,18 +506,20 @@ public class camera_movement : MonoBehaviour
             crop.SetActive(false);
         }
         checkMarks[field_no].SetActive(true);
+        ScheckMarks[field_no] = 1;
     }
 
     private void modify_sec_crop(int field_no, string crop_name)
     {
-        isSecFieldEmpty[field_no] = false;
-        isSecFieldReady[field_no] = true;
+        isSecFieldEmpty[field_no] = 0;
+        isSecFieldReady[field_no] = 1;
         if (field_no == 0)
         {
             isCarrotButtonOpen = false;
             for (int i=0; i<9; i++)
             {
                 carrots[i].SetActive(true);
+                Scarrots[i] = 1;
             }
             carrot_button.SetActive(false);
         }
@@ -339,6 +529,7 @@ public class camera_movement : MonoBehaviour
             for (int i=0; i<12; i++)
             {
                 pumpkins[i].SetActive(true);
+                Spumpkins[i] = 1;
             }
             pumpkin_button.SetActive(false);
         }
@@ -348,6 +539,7 @@ public class camera_movement : MonoBehaviour
             for (int i=9; i<18; i++)
             {
                 carrots[i].SetActive(true);
+                Scarrots[i] = 1;
             }
             carrot_button.SetActive(false);
         }
@@ -357,14 +549,17 @@ public class camera_movement : MonoBehaviour
             for (int i=12; i<24; i++)
             {
                 pumpkins[i].SetActive(true);
+                Spumpkins[i] = 1;
             }
             pumpkin_button.SetActive(false);
         }
         secCheckMarks[field_no].SetActive(true);
+        SsecCheckMarks[field_no] = 1;
     }
 
     public void add_crop(string crop_name)
     {
+        Debug.Log(crop_name);
         if (component_name == "field_13")
         {
             modify_crop(0,crop_name);
@@ -387,7 +582,6 @@ public class camera_movement : MonoBehaviour
         }
         else if (component_name == "field_12")
         {
-            Debug.Log("clicked");
             modify_sec_crop(1,crop_name);
         }
         else if (component_name == "field_21")
