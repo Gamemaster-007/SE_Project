@@ -22,11 +22,11 @@ public class camera_movement : MonoBehaviour
     public GameObject[] secCheckMarks = new GameObject[4];
     public int[] SsecCheckMarks = new int[4]; //s
     
-    public int paddy_count = 0; //s
-    public int sunflower_count = 0; //s
-    public int corn_count = 0; //s
-    public int pumpkin_count = 0; //s
-    public int carrot_count = 0; //s
+    public int[] items_count = {0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //s  0-paddy 1-sunflower 2-corn 3-pumpkin 4-carrot 5-bread 6-cake 7-carrotjuice 8-baverage 9-halwa 10-pizza 11-popcorn 12-pimpkinpie 13-soup
+    public Text[] items_Total_Count_text = new Text[28];
+
+    public int[] items_display_count = {0,0,0,0,0,0,0,0,0}; //s
+    public Text[] items_Count_text = new Text[9];
 
     public GameObject[] crop_menu;
     public bool isCropMenuOpen = false;
@@ -64,6 +64,8 @@ public class camera_movement : MonoBehaviour
     public int[] item_prices = {7500,10000,500,750,800,930,1500}; //s
 
     public GameObject[] bakery_logos = new GameObject[2];
+    public GameObject Bakery_HOT;
+    public GameObject Bakery_Sweet;
 
     private void Awake()
     {
@@ -87,11 +89,7 @@ public class camera_movement : MonoBehaviour
             isSecFieldEmpty = data.isSecFieldEmpty;
             isSecFieldReady = data.isSecFieldReady;
             SsecCheckMarks = data.SsecCheckMarks;
-            paddy_count = data.paddy_count;
-            sunflower_count = data.sunflower_count;
-            corn_count = data.corn_count;
-            pumpkin_count = data.pumpkin_count;
-            carrot_count = data.carrot_count;
+            items_count = data.items_count;
             Spaddy = data.Spaddy;
             Ssunflowers = data.Ssunflowers;
             Scorns = data.Scorns;
@@ -141,6 +139,10 @@ public class camera_movement : MonoBehaviour
         }
         total_coins_display.text = total_coins.ToString();
         shop_coins_display.text = total_coins.ToString();
+        for (int i=0; i<28; i++)
+        {
+            items_Total_Count_text[i].text = "x" + items_count[i%13].ToString();
+        }
     }
 
     private void on_field_tap(int field_no, string component_Name)
@@ -168,13 +170,17 @@ public class camera_movement : MonoBehaviour
             ScheckMarks[field_no] = 0;
             if (crop_Names[field_no] == "paddy")
             {
-                paddy_count = paddy_count + 1;
+                items_count[0] = items_count[0] + 1;
+                items_Total_Count_text[0].text = "x" + items_count[0].ToString();
+                items_Total_Count_text[14].text = "x" + items_count[0].ToString();
                 paddy[field_no].SetActive(false);
                 Spaddy[field_no] = 0;
             }
             else if (crop_Names[field_no] == "sunflower")
             {
-                sunflower_count = sunflower_count + 1;
+                items_count[1] = items_count[1] + 1;
+                items_Total_Count_text[1].text = "x" + items_count[1].ToString();
+                items_Total_Count_text[15].text = "x" + items_count[1].ToString();
                 for (int i=field_no*6; i<(field_no+1)*6; i++)
                 {
                     sunflowers[i].SetActive(false);
@@ -183,7 +189,9 @@ public class camera_movement : MonoBehaviour
             }
             else
             {
-                corn_count = corn_count + 1;
+                items_count[2] = items_count[2] + 1;
+                items_Total_Count_text[2].text = "x" + items_count[2].ToString();
+                items_Total_Count_text[16].text = "x" + items_count[2].ToString();
                 for (int i=field_no*6; i<(field_no+1)*6; i++)
                 {
                     corns[i].SetActive(false);
@@ -218,7 +226,9 @@ public class camera_movement : MonoBehaviour
                 isSecFieldReady[field_no] = 0;
                 secCheckMarks[field_no].SetActive(false);
                 SsecCheckMarks[field_no] = 0;
-                pumpkin_count = pumpkin_count + 1;
+                items_count[3] = items_count[3] + 1;
+                items_Total_Count_text[3].text = "x" + items_count[3].ToString();
+                items_Total_Count_text[17].text = "x" + items_count[3].ToString();
                 if (field_no == 1)
                 {
                     for (int i=0; i<12; i++)
@@ -260,7 +270,9 @@ public class camera_movement : MonoBehaviour
                 isSecFieldReady[field_no] = 0;
                 secCheckMarks[field_no].SetActive(false);
                 SsecCheckMarks[field_no] = 0;
-                carrot_count = carrot_count + 1;
+                items_count[4] = items_count[4] + 1;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
                 if (field_no == 0)
                 {
                     for (int i=0; i<9; i++)
@@ -374,9 +386,24 @@ public class camera_movement : MonoBehaviour
                         }
                         else if (hit.transform.name == "factory_1")
                         {
-                            items[cur_item].SetActive(true);
+                            if(cur_item != -1)
+                            {
+                                items[cur_item].SetActive(true);
+                            }
+                            else
+                            {
+                                shopIsEmpty.SetActive(true);
+                            }
                             shop.SetActive(true);
                             component_name = "factory_1";
+                        }
+                        else if (hit.transform.name == "Bakery_HOT")
+                        {
+                            Bakery_HOT.SetActive(true);
+                        }
+                        else if (hit.transform.name == "Bakery_Sweet")
+                        {
+                            Bakery_Sweet.SetActive(true);
                         }
                     }
                 }
@@ -384,6 +411,259 @@ public class camera_movement : MonoBehaviour
                 
         }
 
+    }
+
+    public void close_Bakery_Hot(){
+        Bakery_HOT.SetActive(false);
+    }
+
+    public void close_Bakery_Sweet(){
+        Bakery_Sweet.SetActive(false);
+    }
+
+    public void add_display_count(string item_name)
+    {
+        if (item_name == "bread")
+        {
+            if(items_count[0] >= (items_display_count[0] + 1)*10)
+            {
+                items_display_count[0] = items_display_count[0] + 1;
+                items_Count_text[0].text = items_display_count[0].ToString();
+            }
+        }
+        else if (item_name == "cake")
+        {
+            if(items_count[0] >= (items_display_count[1] + 1)*3 && items_count[4] >= (items_display_count[1] + 1)*2)
+            {
+                items_display_count[1] = items_display_count[1] + 1;
+                items_Count_text[1].text = items_display_count[1].ToString();
+            }
+        }
+        else if (item_name == "carrotJuice")
+        {
+            if(items_count[4] >= (items_display_count[2] + 1)*5)
+            {
+                items_display_count[2] = items_display_count[2] + 1;
+                items_Count_text[2].text = items_display_count[2].ToString();
+            }
+        }
+        else if (item_name == "baverage")
+        {
+            if(items_count[4] >= (items_display_count[3] + 1)*2 && items_count[3] >= (items_display_count[3] + 1)*3)
+            {
+                items_display_count[3] = items_display_count[3] + 1;
+                items_Count_text[3].text = items_display_count[3].ToString();
+            }
+        }
+        else if (item_name == "halwa")
+        {
+            if(items_count[4] >= (items_display_count[4] + 1)*6 && items_count[1] >= (items_display_count[4] + 1))
+            {
+                items_display_count[4] = items_display_count[4] + 1;
+                items_Count_text[4].text = items_display_count[4].ToString();
+            }
+        }
+        else if (item_name == "pizza")
+        {
+            if(items_count[0] >= (items_display_count[5] + 1)*4 && items_count[1] >= (items_display_count[5] + 1)*2 && items_count[2] >= (items_display_count[5] + 1)*2 && items_count[4] >= (items_display_count[5] + 1)*4)
+            {
+                items_display_count[5] = items_display_count[5] + 1;
+                items_Count_text[5].text = items_display_count[5].ToString();
+            }
+        }
+        else if (item_name == "popcorn")
+        {
+            if(items_count[1] >= (items_display_count[6] + 1) && items_count[2] >= (items_display_count[6] + 1)*3)
+            {
+                items_display_count[6] = items_display_count[6] + 1;
+                items_Count_text[6].text = items_display_count[6].ToString();
+            }
+        }
+        else if (item_name == "pumpkinpie")
+        {
+            if(items_count[0] >= (items_display_count[7] + 1)*2 && items_count[1] >= (items_display_count[7] + 1) && items_count[3] >= (items_display_count[7] + 1)*3)
+            {
+                items_display_count[7] = items_display_count[7] + 1;
+                items_Count_text[7].text = items_display_count[7].ToString();
+            }
+        }
+        else if (item_name == "soup")
+        {
+            if(items_count[2] >= (items_display_count[8] + 1)*2 && items_count[4] >= (items_display_count[8] + 1)*3)
+            {
+                items_display_count[8] = items_display_count[8] + 1;
+                items_Count_text[8].text = items_display_count[8].ToString();
+            }
+        }
+    }
+
+    public void decrease_display_count(int item_index)
+    {
+        if(items_display_count[item_index] > 0)
+        {
+            items_display_count[item_index] = items_display_count[item_index] - 1;
+            items_Count_text[item_index].text = items_display_count[item_index].ToString();
+        }
+    }
+
+    public void bake_item(string item_name)
+    {
+        if (item_name == "bread")
+        {
+            if(items_count[0] >= (items_display_count[0])*10)
+            {
+                items_count[0] = items_count[0] - (items_display_count[0])*10;
+                items_Total_Count_text[0].text = "x" + items_count[0].ToString();
+                items_Total_Count_text[14].text = "x" + items_count[0].ToString();
+                items_count[5] = items_count[5] + items_display_count[0];
+                items_Total_Count_text[5].text = "x" + items_count[5].ToString();
+                items_Total_Count_text[19].text = "x" + items_count[5].ToString();
+                items_display_count[0] = 0;
+                items_Count_text[0].text = items_display_count[0].ToString();
+            }
+        }
+        else if (item_name == "cake")
+        {
+            if(items_count[0] >= (items_display_count[1])*3 && items_count[4] >= (items_display_count[1])*2)
+            {
+                items_count[0] = items_count[0] - (items_display_count[1])*3;
+                items_Total_Count_text[0].text = "x" + items_count[0].ToString();
+                items_Total_Count_text[14].text = "x" + items_count[0].ToString();
+                items_count[4] = items_count[4] - (items_display_count[1])*2;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[6] = items_count[6] + items_display_count[1];
+                items_Total_Count_text[6].text = "x" + items_count[6].ToString();
+                items_Total_Count_text[20].text = "x" + items_count[6].ToString();
+                items_display_count[1] = 0;
+                items_Count_text[1].text = items_display_count[1].ToString();
+            }
+        }
+        else if (item_name == "carrotJuice")
+        {
+            if(items_count[4] >= (items_display_count[2])*5)
+            {
+                items_count[4] = items_count[4] - (items_display_count[2])*5;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[7] = items_count[7] + items_display_count[2];
+                items_Total_Count_text[7].text = "x" + items_count[7].ToString();
+                items_Total_Count_text[21].text = "x" + items_count[7].ToString();
+                items_display_count[2] = 0;
+                items_Count_text[2].text = items_display_count[2].ToString();
+            }
+        }
+        else if (item_name == "baverage")
+        {
+            if(items_count[4] >= (items_display_count[3])*2 && items_count[3] >= (items_display_count[3])*3)
+            {
+                items_count[4] = items_count[4] - (items_display_count[3])*2;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[3] = items_count[3] - (items_display_count[3])*3;
+                items_Total_Count_text[3].text = "x" + items_count[3].ToString();
+                items_Total_Count_text[17].text = "x" + items_count[3].ToString();
+                items_count[8] = items_count[8] + items_display_count[3];
+                items_Total_Count_text[8].text = "x" + items_count[8].ToString();
+                items_Total_Count_text[22].text = "x" + items_count[8].ToString();
+                items_display_count[3] = 0;
+                items_Count_text[3].text = items_display_count[3].ToString();
+            }
+        }
+        else if (item_name == "halwa")
+        {
+            if(items_count[4] >= (items_display_count[4])*6 && items_count[1] >= (items_display_count[4]))
+            {
+                items_count[4] = items_count[4] - (items_display_count[4])*6;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[1] = items_count[1] - (items_display_count[4]);
+                items_Total_Count_text[1].text = "x" + items_count[1].ToString();
+                items_Total_Count_text[15].text = "x" + items_count[1].ToString();
+                items_count[9] = items_count[9] + items_display_count[4];
+                items_Total_Count_text[9].text = "x" + items_count[9].ToString();
+                items_Total_Count_text[23].text = "x" + items_count[9].ToString();
+                items_display_count[4] = 0;
+                items_Count_text[4].text = items_display_count[4].ToString();
+            }
+        }
+        else if (item_name == "pizza")
+        {
+            if(items_count[0] >= (items_display_count[5])*4 && items_count[1] >= (items_display_count[5])*2 && items_count[2] >= (items_display_count[5])*2 && items_count[4] >= (items_display_count[5])*4)
+            {
+                items_count[0] = items_count[0] - (items_display_count[5])*4;
+                items_Total_Count_text[0].text = "x" + items_count[0].ToString();
+                items_Total_Count_text[14].text = "x" + items_count[0].ToString();
+                items_count[1] = items_count[1] - (items_display_count[5])*2;
+                items_Total_Count_text[1].text = "x" + items_count[1].ToString();
+                items_Total_Count_text[15].text = "x" + items_count[1].ToString();
+                items_count[2] = items_count[2] - (items_display_count[5])*2;
+                items_Total_Count_text[2].text = "x" + items_count[2].ToString();
+                items_Total_Count_text[16].text = "x" + items_count[2].ToString();
+                items_count[4] = items_count[4] - (items_display_count[5])*4;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[10] = items_count[10] + items_display_count[5];
+                items_Total_Count_text[10].text = "x" + items_count[10].ToString();
+                items_Total_Count_text[24].text = "x" + items_count[10].ToString();
+                items_display_count[5] = 0;
+                items_Count_text[5].text = items_display_count[5].ToString();
+            }
+        }
+        else if (item_name == "popcorn")
+        {
+            if(items_count[1] >= (items_display_count[6]) && items_count[2] >= (items_display_count[6])*3)
+            {
+                items_count[1] = items_count[1] - (items_display_count[6]);
+                items_Total_Count_text[1].text = "x" + items_count[1].ToString();
+                items_Total_Count_text[15].text = "x" + items_count[1].ToString();
+                items_count[2] = items_count[2] - (items_display_count[6])*3;
+                items_Total_Count_text[2].text = "x" + items_count[2].ToString();
+                items_Total_Count_text[16].text = "x" + items_count[2].ToString();
+                items_count[11] = items_count[11] + items_display_count[6];
+                items_Total_Count_text[11].text = "x" + items_count[11].ToString();
+                items_Total_Count_text[25].text = "x" + items_count[11].ToString();
+                items_display_count[6] = 0;
+                items_Count_text[6].text = items_display_count[6].ToString();
+            }
+        }
+        else if (item_name == "pumpkinpie")
+        {
+            if(items_count[0] >= (items_display_count[7])*2 && items_count[1] >= (items_display_count[7]) && items_count[3] >= (items_display_count[7])*3)
+            {
+                items_count[0] = items_count[0] - (items_display_count[7])*2;
+                items_Total_Count_text[0].text = "x" + items_count[0].ToString();
+                items_Total_Count_text[14].text = "x" + items_count[0].ToString();
+                items_count[1] = items_count[1] - (items_display_count[7]);
+                items_Total_Count_text[1].text = "x" + items_count[1].ToString();
+                items_Total_Count_text[15].text = "x" + items_count[1].ToString();
+                items_count[3] = items_count[3] - (items_display_count[7])*3;
+                items_Total_Count_text[3].text = "x" + items_count[3].ToString();
+                items_Total_Count_text[17].text = "x" + items_count[3].ToString();
+                items_count[12] = items_count[12] + items_display_count[7];
+                items_Total_Count_text[12].text = "x" + items_count[12].ToString();
+                items_Total_Count_text[26].text = "x" + items_count[12].ToString();
+                items_display_count[7] = 0;
+                items_Count_text[7].text = items_display_count[7].ToString();
+            }
+        }
+        else if (item_name == "soup")
+        {
+            if(items_count[2] >= (items_display_count[8])*2 && items_count[4] >= (items_display_count[8])*3)
+            {
+                items_count[2] = items_count[2] - (items_display_count[8])*2;
+                items_Total_Count_text[2].text = "x" + items_count[2].ToString();
+                items_Total_Count_text[16].text = "x" + items_count[2].ToString();
+                items_count[4] = items_count[4] - (items_display_count[8])*3;
+                items_Total_Count_text[4].text = "x" + items_count[4].ToString();
+                items_Total_Count_text[18].text = "x" + items_count[4].ToString();
+                items_count[13] = items_count[13] + items_display_count[8];
+                items_Total_Count_text[13].text = "x" + items_count[13].ToString();
+                items_Total_Count_text[27].text = "x" + items_count[13].ToString();
+                items_display_count[8] = 0;
+                items_Count_text[8].text = items_display_count[8].ToString();
+            }
+        }
     }
 
     public void next_item(){
@@ -559,7 +839,6 @@ public class camera_movement : MonoBehaviour
 
     public void add_crop(string crop_name)
     {
-        Debug.Log(crop_name);
         if (component_name == "field_13")
         {
             modify_crop(0,crop_name);

@@ -27,6 +27,7 @@ public class SavingData
     public int cur_item; //s
     public int[] item_prices; //s
     public int[] display_coin_count;
+    public int[] items_count;
 
     public SavingData (camera_movement info)
     {
@@ -37,11 +38,6 @@ public class SavingData
         isSecFieldEmpty = info.isSecFieldEmpty;
         isSecFieldReady = info.isSecFieldReady;
         SsecCheckMarks = info.SsecCheckMarks;
-        paddy_count = info.paddy_count;
-        sunflower_count = info.sunflower_count;
-        corn_count = info.corn_count;
-        pumpkin_count = info.pumpkin_count;
-        carrot_count = info.carrot_count;
         Spaddy = info.Spaddy;
         Ssunflowers = info.Ssunflowers;
         Scorns = info.Scorns;
@@ -52,5 +48,6 @@ public class SavingData
         cur_item = info.cur_item;
         item_prices = info.item_prices;
         display_coin_count = info.display_coin_count;
+        items_count = info.items_count;
     }
 }
