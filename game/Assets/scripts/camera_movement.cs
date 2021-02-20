@@ -9,7 +9,6 @@ public class camera_movement : MonoBehaviour
     public bool istapped;
     public string component_name;
     
-    
     public string[] crop_Names = new string[4]; //s
 
     public int[] isFieldEmpty = {1,1,1,1}; //s
@@ -48,12 +47,12 @@ public class camera_movement : MonoBehaviour
     public GameObject[] carrots = new GameObject[18];
     public int[] Scarrots = new int[18]; //s
 
-    public int total_coins = 100000; //s
+    public int total_coins = 0; //s
     public Text total_coins_display;
     public Text shop_coins_display;
     public Text market_coins_display;
 
-    public int[] display_coin_count = {1000,200}; //s
+    public int[] display_coin_count = {0,0}; //s
     public GameObject[] coins = new GameObject[2];
     public GameObject[] display_coin_text = new GameObject[2];
 
@@ -89,7 +88,6 @@ public class camera_movement : MonoBehaviour
     public GameObject[] pages;
     public int cur_page = 0;
 
-    public float[] crop_times = {10,20,15,20,25};
     public bool[] isFieldTimerOn = {false,false,false,false};
     public float[] field_times = {0,0,0,0};
     public GameObject[] field_timer_count = new GameObject[4];
@@ -101,22 +99,22 @@ public class camera_movement : MonoBehaviour
     public float time_forCoins_1 = 0;
     public float time_forCoins_2 = 0;
     public float time_forBuildings = 0;
+    public float time_forWaste = 0;
 
     public GameObject[] building_1 = new GameObject[9];
     public GameObject[] building_2 = new GameObject[9];
     public GameObject[] building_3 = new GameObject[9];
     public GameObject[] building_4 = new GameObject[9];
-    public GameObject[] building_5 = new GameObject[9];
-    public GameObject[] building_6 = new GameObject[9];
-    public GameObject[] building_7 = new GameObject[9];
-    public GameObject[] building_8 = new GameObject[9];
-    public GameObject[] building_9 = new GameObject[9];
-    public GameObject[] building_10 = new GameObject[9];
-    public GameObject[] building_11 = new GameObject[9];
-    public GameObject[] building_12 = new GameObject[9];
+    public int[] no_on_building = {-1,-1,-1,-1};
 
-    public bool[] isBuildingOpen = {false,false,false,false,false,false,false,false,false,false,false,false};
+    public GameObject[] waste_display_blocks;
+    public float[] waste_values = {0.5f,1f};
+    public bool[] is_waste_open;
 
+    public int[] build_prices = {400,90,120,70,120,160,210,540,60};
+    public int[] items_indexes = {10,5,6,7,8,9,11,12,13}; 
+
+    public GameObject rain;
     public bool isSomethingOpen = false;
 
     private void Awake()
@@ -132,9 +130,9 @@ public class camera_movement : MonoBehaviour
     public void Start(){
         SavingData data = SaveSystem.LoadData();
 
-        // user_quide.SetActive(true);
-        // pages[cur_page].SetActive(true);
-        // isSomethingOpen = true;
+        user_quide.SetActive(true);
+        pages[cur_page].SetActive(true);
+        isSomethingOpen = true;
 
         if (data != null)
         {        
@@ -419,13 +417,47 @@ public class camera_movement : MonoBehaviour
 
         time_forBuildings += Time.deltaTime;
 
-        if(time_forBuildings > 5)
+        if(time_forBuildings > 60)
         {
-            var temp = Random.Range(1,12);
+            var temp = Random.Range(1,4);
             var temp1 = Random.Range(1,9);
-            Debug.Log(temp);
-            Debug.Log(temp1);
+            if(no_on_building[temp-1] == -1)
+            {
+                if(temp == 1)
+                {
+                    building_1[temp1-1].SetActive(true);
+                    no_on_building[0] = temp1;
+                }
+                else if(temp == 2)
+                {
+                    building_2[temp1-1].SetActive(true);
+                    no_on_building[1] = temp1;
+                }
+                else if(temp == 3)
+                {
+                    building_3[temp1-1].SetActive(true);
+                    no_on_building[2] = temp1;
+                }
+                else if(temp == 4)
+                {
+                    building_4[temp1-1].SetActive(true);
+                    no_on_building[3] = temp1;
+                }
+            }
             time_forBuildings = 0;
+        }
+
+        time_forWaste += Time.deltaTime;
+
+        if(time_forWaste > 50)
+        {
+            time_forWaste = 0;
+            var temp = Random.Range(1,2);
+            if(is_waste_open[temp-1] == false)
+            {
+                waste_display_blocks[temp-1].SetActive(true);
+                is_waste_open[temp-1] = true;
+            }
         }
 
         for(int i=0; i<4; i++)
@@ -487,14 +519,17 @@ public class camera_movement : MonoBehaviour
 
         if (total_waste > 8)
         {
+            rain.SetActive(true);
             water.GetComponent<MeshRenderer> ().material = water_dirty;
         }
         else if(total_waste > 6)
         {
+            rain.SetActive(false);
             water.GetComponent<MeshRenderer> ().material = water_avg_clean;
         }
         else
         {
+            rain.SetActive(false);
             water.GetComponent<MeshRenderer> ().material = water_clean;
         }
 
@@ -518,12 +553,12 @@ public class camera_movement : MonoBehaviour
                 istapped = false;
                 var new_cam_pos = Delta1+Camera.transform.position;
                 
-                if (new_cam_pos.x > -90 && new_cam_pos.x < 150 && new_cam_pos.z > -70 && new_cam_pos.z < -10 && !isSomethingOpen)
+                if (new_cam_pos.x > -90 && new_cam_pos.x < 150 && new_cam_pos.z > -70 && new_cam_pos.z < -10 && isSomethingOpen == false)
                     Camera.transform.Translate(Delta1, Space.World);
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if (istapped == true && !isSomethingOpen)
+                if (istapped == true && isSomethingOpen == false)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
                     RaycastHit hit;
@@ -604,6 +639,48 @@ public class camera_movement : MonoBehaviour
                         {
                             Waste_Management.SetActive(true);
                             isSomethingOpen = true;
+                        }
+                        else if (hit.transform.name == "building_1" || hit.transform.name == "building_2" || hit.transform.name == "building_3" || hit.transform.name == "building_4")
+                        {
+                            var temp = int.Parse(hit.transform.name.Substring(9,1));
+                            if(no_on_building[temp - 1] != -1 && items_count[items_indexes[no_on_building[temp - 1] - 1]] > 0)
+                            {
+                                if(temp == 1)
+                                {
+                                    building_1[no_on_building[temp - 1] - 1].SetActive(false);
+                                }
+                                else if(temp == 2)
+                                {
+                                    building_2[no_on_building[temp - 1] - 1].SetActive(false);
+                                }
+                                else if(temp == 3)
+                                {
+                                    building_3[no_on_building[temp - 1] - 1].SetActive(false);
+                                }
+                                else
+                                {
+                                    building_4[no_on_building[temp - 1] - 1].SetActive(false);
+                                }
+                                items_count[items_indexes[no_on_building[temp - 1] - 1]] = items_count[items_indexes[no_on_building[temp - 1] - 1]] - 1;
+                                items_Total_Count_text[items_indexes[no_on_building[temp - 1] - 1]].text = "x" + items_count[items_indexes[no_on_building[temp - 1] - 1]].ToString();
+                                items_Total_Count_text[items_indexes[no_on_building[temp - 1] - 1] + 14].text = "x" + items_count[items_indexes[no_on_building[temp - 1] - 1]].ToString();
+                                total_coins = total_coins + build_prices[no_on_building[temp - 1] - 1];
+                                no_on_building[temp - 1] = -1;
+                                total_coins_display.text = total_coins.ToString();
+                                shop_coins_display.text = total_coins.ToString();
+                                market_coins_display.text = total_coins.ToString();
+                            }
+                        }
+                        else if (hit.transform.name == "waste_1" || hit.transform.name == "waste_2")
+                        {
+                            var temp = int.Parse(hit.transform.name.Substring(6,1)) - 1;
+                            if(is_waste_open[temp] == true)
+                            {
+                                total_waste += (float)waste_values[temp];
+                                waste_display.text = ((int)(((float)total_waste/10)*100)).ToString() + "%";
+                                waste_display_blocks[temp].SetActive(false);
+                                is_waste_open[temp] = false;
+                            }
                         }
                     }
                 }

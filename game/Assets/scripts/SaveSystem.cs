@@ -7,7 +7,7 @@ public static class SaveSystem
     public static void SaveData(camera_movement info)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/data12.se";
+        string path = Application.persistentDataPath + "/data.se";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SavingData data = new SavingData(info);
@@ -18,7 +18,7 @@ public static class SaveSystem
 
     public static SavingData LoadData()
     {
-        string path = Application.persistentDataPath + "/data12.se";
+        string path = Application.persistentDataPath + "/data.se";
         if(File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
