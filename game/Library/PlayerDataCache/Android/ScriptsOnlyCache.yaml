@@ -2,10 +2,9 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - camera_movement
+    - rotatingblocks
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    Unity.Timeline.Editor.dll:
-    - TimelineProjectSettings
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -54,29 +53,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1486}
+      Script: {instanceID: 1488}
     - Class: 114
-      Script: {instanceID: 1672}
+      Script: {instanceID: 1674}
     - Class: 114
-      Script: {instanceID: 1694}
+      Script: {instanceID: 1696}
     - Class: 114
-      Script: {instanceID: 1702}
+      Script: {instanceID: 1704}
     - Class: 114
-      Script: {instanceID: 2202}
+      Script: {instanceID: 1826}
     - Class: 114
-      Script: {instanceID: 2532}
+      Script: {instanceID: 2206}
     - Class: 114
-      Script: {instanceID: 2614}
+      Script: {instanceID: 2536}
     - Class: 114
-      Script: {instanceID: 2794}
+      Script: {instanceID: 2618}
     - Class: 114
-      Script: {instanceID: 3016}
+      Script: {instanceID: 2798}
     - Class: 114
-      Script: {instanceID: 3332}
+      Script: {instanceID: 3020}
     - Class: 114
-      Script: {instanceID: 3466}
+      Script: {instanceID: 3336}
     - Class: 114
-      Script: {instanceID: 18446}
+      Script: {instanceID: 3470}
+    - Class: 114
+      Script: {instanceID: 21544}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -84,6 +85,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -182,7 +187,7 @@ ScriptsOnlyBuild:
     className: PlayerQuitHandler
   - hash:
       serializedVersion: 2
-      Hash: ba3ff742f6afe668b6e6851cfa79d5f0
+      Hash: 66953fdafde006134a439f1bf1272f93
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: camera_movement
@@ -204,6 +209,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 4ee1b8e855226701eb8f495145480221
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: rotatingblocks
   - hash:
       serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
@@ -531,4 +542,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: /Users/gamemaster/Documents/SE_project/SE_Project/game/dc.apk
+  playerPath: /Users/gamemaster/Documents/SE_project/SE_Project/game/BigLittleTownship.apk
