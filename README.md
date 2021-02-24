@@ -1,4 +1,5 @@
 # Big Little Township
+
 Our Game is designed to bring awareness to the user about how an Ecosystem gets affected due to human actions, and allow the user understand the importance of managing those issues to make the Ecosystem stable.
 - User plays the role of a Mayor, who manages all the activities that take part in an Ecosystem containing - farm, forest, ocean, city, industry, factories.
 - User has to grow crops in the fields present in farms and can also buy crops from the Farmers Market present in farms.
@@ -46,4 +47,14 @@ NOTE : User can access the above mentioned shop, bakeries, coin miners, fields e
 
 ## PLATFORM
 * ANDROID
+```
+How to Install
+* Navigate to "game/" directory
+* download BigLittleTownship.apk file
+* share it to your android device
+* install it like a normal apk file and now you can enjoy the game.
+```
 * IOS
+```
+For IOS users game will available on App store soon.
+```
