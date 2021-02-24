@@ -1,5 +1,5 @@
 # Big Little Township
-    -Our Game is designed to bring awareness to the user about how an Ecosystem gets affected due to human actions, and allow the user understand the importance of managing those issues to make the Ecosystem stable.
+  Our Game is designed to bring awareness to the user about how an Ecosystem gets affected due to human actions, and allow the user understand the importance of managing those issues to make the Ecosystem stable.
     1. User plays the role of a Mayor, who manages all the activities that take part in an Ecosystem containing - farm, forest, ocean, city, industry, factories.
     2. User has to grow crops in the fields present in farms and can also buy crops from the Farmers Market present in farms.
     3. The people of the city have some needs like food, waste disposal etc..
@@ -13,7 +13,7 @@
     11. Coin miners present in the city will mine coins alongside with time. User can collect those coins and use them according to the user's needs.
     12. The rate at which the coin miners mine coins will be reduced if the waste is not recycled for a long time.
     
-     13. User can buy items like tractor, truck etc. from the shop present in the industry area.
+   13. User can buy items like tractor, truck etc. from the shop present in the industry area.
     14. Coins collected and waste percentage shown on top right corner.
     15. Game will be saved and Game can be continued from where the user left off.
     NOTE : User can access the above mentioned shop, bakeries, coin miners, fields etc. by just tapping on them.
