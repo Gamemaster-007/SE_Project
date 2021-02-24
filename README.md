@@ -45,4 +45,5 @@ NOTE : User can access the above mentioned shop, bakeries, coin miners, fields e
 * Microsoft Teams
 
 ## PLATFORM
-* ANDROID CONTRIBUTIONS
+* ANDROID
+* IOS
