@@ -20,29 +20,29 @@ NOTE : User can access the above mentioned shop, bakeries, coin miners, fields e
 
 ### CITY
 
-❏ City has buildings with cubes rotating on them i.e; people in those buildings require the items displayed on the cube and price mentioned on lateral faces.
-❏ Two coin miners with coin objects rotating on them with coins to be collected.
-❏ Two bakeries, where items to be baked.
-❏ On clicking the bakery building, the menu will be displayed as shown above.
+* City has buildings with cubes rotating on them i.e; people in those buildings require the items displayed on the cube and price mentioned on lateral faces.
+* Two coin miners with coin objects rotating on them with coins to be collected.
+* Two bakeries, where items to be baked.
+* On clicking the bakery building, the menu will be displayed as shown above.
 
 ### FARM
 
-❏ Farm has eight cultivated lands, in which four are permitted to rice, corn and sunflower, and they can be grown as per user interest. And among the remaining four lands, two for pumpkin and rest for carrot.
-❏ On clicking the land, options will display as shown above.
-❏ After selecting the option, a timer will be shown on the selected field as above.
-❏ After the timer reaches zero, the crop is ready to claim as shown above.
-❏ Warehouse present in the above picture is the farmer’s market.
-❏ On clicking the warehouse, the farmer's market will pop up and look like the above picture.
+* Farm has eight cultivated lands, in which four are permitted to rice, corn and sunflower, and they can be grown as per user interest. And among the remaining four lands, two for pumpkin and rest for carrot.
+* On clicking the land, options will display as shown above.
+* After selecting the option, a timer will be shown on the selected field as above.
+* After the timer reaches zero, the crop is ready to claim as shown above.
+* Warehouse present in the above picture is the farmer’s market.
+* On clicking the warehouse, the farmer's market will pop up and look like the above picture.
 
 ### INDUSTRIAL AREA
 
-❏ Blue building above is the waste management unit. ❏ On clicking on it, the menu opens as shown below.
-❏ The red building shown above is the shop and on clicking it, menu opens as shown below.
+* Blue building above is the waste management unit. ❏ On clicking on it, the menu opens as shown below.
+* The red building shown above is the shop and on clicking it, menu opens as shown below.
  
 
-### USED TOOLS
-❏ UNITY 3D FRAMEWORKS
-❏ Microsoft Teams
+## USED TOOLS
+* UNITY 3D FRAMEWORKS
+* Microsoft Teams
 
 ## PLATFORM
-❏ ANDROID CONTRIBUTIONS
+* ANDROID CONTRIBUTIONS
